@@ -1,0 +1,50 @@
+//----------------------This is the Google Script that is attached to the spreadsheet. It runs on form submit to add the event.
+
+
+//Here we enter the ID for our public calendar in the app...
+var calendarId = "oph92dqr1vcn0hgia89c7b0kt8@group.calendar.google.com";
+ 
+//Let's begin by setting our variables...
+ 
+//Column containg the Start Date/Time for the event
+var startDtId = 3;
+//Column containg the End Date/Time for the event
+var endDtId = 4;
+//Column containg the title of our event
+var titleId = 2;
+//Column containg the description for the event
+var descId = 5;
+//Column containg the Time Stamp for the event
+var formTimeStampId = 1;
+ 
+function getLatestAndSubmitToCalendar() {
+//Allow access to our spreadsheet which contains the events and get the rows
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var rows = sheet.getDataRange();
+  var numRows = rows.getNumRows();
+  var values = rows.getValues();
+  var lr = rows.getLastRow();
+//Our date and time...
+  var startDt = sheet.getRange(lr,startDtId,1,1).getValue();
+  var endDt = sheet.getRange(lr,endDtId,1,1).getValue();
+//Setting the description of the event
+  var desc = sheet.getRange(lr,descId,1,1).getValue();
+//Put the value of the title into the variable
+  var title = sheet.getRange(lr,titleId,1,1).getValue();
+  //At this point we have all the variables: we can safely run out function to create the event
+    createEvent(calendarId,title,startDt,endDt,desc);
+};
+ 
+function createEvent(calendarId,title,startDt,endDt,desc) {
+  var cal = CalendarApp.getCalendarById(calendarId);
+  var start = new Date(startDt);
+  var end = new Date(endDt);
+//I've manually set the location for every event to be in Gainesville, Fl, which is easy to change if I would add a row into the sheet and a field into the form
+  var loc = 'Gainesville, Fl';
+ 
+//Here is where we set the events for our google calendar.
+  var event = cal.createEvent(title, start, end, {
+      description : desc,
+      location : loc
+  });
+};
