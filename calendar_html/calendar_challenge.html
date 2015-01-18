@@ -1,0 +1,136 @@
+<!--***************************************************************************************************-->
+	<!-- This is the HTML 5 version of the app. It's a lot prettier, and generally is my favorite version. -->
+	<!-- I've tested this one in Safari and Chrome and it works great. -->
+<!--***************************************************************************************************-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar app</title>
+
+  <script src="js/jquery.js"></script>
+  <script src="js/jquerymobile.js"></script>
+
+  <!-- stylesheets -->
+  <link rel="stylesheet" href="css/jquerymobile.css">
+  <link rel="stylesheet" href="https://docs.google.com/static/forms/client/css/4075461621-formview_st_ltr.css">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+
+</head>
+<body>
+  <!-- page: Calendar -->
+  <section id="calendar" class="header_default footer_default" data-role="page" data-title="Calendar">
+    <div data-theme="a" data-role="content" class="ui-corner-all" id="cal">
+    	<!-- Under here we have our actual calendar. We can refresh the calendar by pressing the refresh button. This part is simple-->
+    	<!--This button will reload the calendar exclusively -->
+    	<!-- The reason I added this button is because sometimes it takes some time for an event to be added. -->
+    	<!-- So if the event has been added and the calendar would refresh, the user may think it wasn't added because of the lag-->
+    	<!-- Also I can not automatically refresh this every so often, because the user may be going through the calendar-->
+    	<input type="button" onclick="reload()" value="Reload the calendar">
+    	<br>
+    	<div class="responsive-iframe-container">
+    	<iframe id="calendarFrame" src="https://www.google.com/calendar/embed?showTitle=0&amp;mode=AGENDA&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=oph92dqr1vcn0hgia89c7b0kt8%40group.calendar.google.com&amp;color=%2323164E&amp;ctz=America%2FNew_York" style=" border-width:0 " width="100%" height="100" frameborder="0" scrolling="no">Error... Please use a different browser, yours doesn't support iframes.</iframe>
+    	</div>
+    	<a href="#addEvent" data-transition="turn" class="ui-btn ui-icon-calendar ui-btn-icon-left
+            ui-corner-all ui-btn-b">Add event</a>
+    </div><!-- content -->
+  </section><!-- Calendar page -->
+
+  <!-- Add Event dialog -->
+  <section id="addEvent" data-overlay-theme="b" data-role="dialog">
+    <header data-role="header"><h1>Event form</h1></header>
+    <div data-theme="a" data-role="content">
+      
+
+<!--This is where the actual form is... Below I explain what actually happens... -->
+
+<!-- This form will submit the filled data to a google spreadsheet. The spreadsheet in turn triggers a Google Script I wrote -->
+<!-- The Google Script takes the added data and then adds it into the calendar as an event -->
+        
+	<div class="ss-form"><script type="text/javascript">var submitted=false;</script>
+<iframe name="hidden_iframe" id="hidden_iframe"
+style="display:none;" onload="if(submitted)
+{window.location='#thankYou';}"></iframe>
+<form action="https://docs.google.com/forms/d/1lF77cSSHWoUINDOeip8u6yGtvBDLEpM7sDj-mKh1vKw/formResponse" method="post"
+target="hidden_iframe" onsubmit="submitted=true;"><ol role="list" class="ss-question-list" style="padding-left: 0">
+<div class="ss-form-question errorbox-good" role="listitem">
+<div dir="ltr" class="ss-item ss-item-required ss-text"><div class="ss-form-entry">
+<!--***************************************************************************************************-->
+	<!-- Event title field -->
+<!--***************************************************************************************************-->
+<label class="ss-q-item-label" for="entry_437350955"><div class="ss-q-title">Event title:
+<label for="itemView.getDomIdToLabel()" aria-label="(Required field)"></label>
+<span class="ss-required-asterisk" aria-hidden="true">*</span></div>
+<div class="ss-q-help ss-secondary-text" dir="ltr"></div></label>
+<input type="text" name="entry.437350955" value="" class="ss-q-short" id="entry_437350955" dir="auto" aria-label="Event title:  " aria-required="true" required="" title="">
+<div class="error-message" id="1833480142_errorMessage"></div>
+<div class="required-message">This is a required question</div>
+</div></div></div> <div class="ss-form-question errorbox-good" role="listitem">
+<div dir="ltr" class="ss-item ss-item-required ss-date"><div class="ss-form-entry">
+<!--***************************************************************************************************-->
+	<!-- Event starts field -->
+<!--***************************************************************************************************-->
+<label class="ss-q-item-label" for="entry_907856936"><div class="ss-q-title">Event starts at:
+<label for="itemView.getDomIdToLabel()" aria-label="(Required field)"></label>
+<span class="ss-required-asterisk" aria-hidden="true">*</span></div>
+<div class="ss-q-help ss-secondary-text" dir="ltr"></div></label>
+<input type="datetime-local" name="entry.907856936" value="" class="ss-q-datetime" dir="auto" id="entry_907856936" aria-label="Start:  " aria-required="true" required="">
+<div class="ss-q-time-hint ss-secondary-text">Example: 03/05/2013 11:30 AM</div>
+<div class="required-message">This is a required question</div></div></div></div> <div class="ss-form-question errorbox-good" role="listitem">
+<div dir="ltr" class="ss-item ss-item-required ss-date"><div class="ss-form-entry">
+<!--***************************************************************************************************-->
+	<!-- Event ends field -->
+<!--***************************************************************************************************-->
+<label class="ss-q-item-label" for="entry_2017882004"><div class="ss-q-title">Event ends at:
+<label for="itemView.getDomIdToLabel()" aria-label="(Required field)"></label>
+<span class="ss-required-asterisk" aria-hidden="true">*</span></div>
+<div class="ss-q-help ss-secondary-text" dir="ltr"></div></label>
+<input type="datetime-local" name="entry.2017882004" value="" class="ss-q-datetime" dir="auto" id="entry_2017882004" aria-label="End:  " aria-required="true" required="">
+<div class="ss-q-time-hint ss-secondary-text">Example: 03/05/2013 11:30 AM</div>
+<div class="required-message">This is a required question</div></div></div></div> <div class="ss-form-question errorbox-good" role="listitem">
+<div dir="ltr" class="ss-item ss-item-required ss-text"><div class="ss-form-entry">
+<!--***************************************************************************************************-->
+	<!-- Event description field -->
+<!--***************************************************************************************************-->
+<label class="ss-q-item-label" for="entry_1717678693"><div class="ss-q-title">Description:
+<label for="itemView.getDomIdToLabel()" aria-label="(Required field)"></label>
+<span class="ss-required-asterisk" aria-hidden="true">*</span></div>
+<div class="ss-q-help ss-secondary-text" dir="ltr"></div></label>
+<input type="text" name="entry.1717678693" value="" class="ss-q-short" id="entry_1717678693" dir="auto" aria-label="Description:  " aria-required="true" required="" title="">
+<div class="error-message" id="248303718_errorMessage"></div>
+<div class="required-message">This is a required question</div>
+</div></div></div>
+<input type="hidden" name="draftResponse" value="[,,&quot;6810876823570950928&quot;]
+">
+<input type="hidden" name="pageHistory" value="0">
+
+
+<input type="hidden" name="fbzx" value="6810876823570950928">
+
+<div class="ss-item ss-navigate"><table id="navigation-table"><tbody><tr><td class="ss-form-entry goog-inline-block" id="navigation-buttons" dir="ltr">
+<input type="submit" name="submit" value="Add event" id="ss-submit" class="jfk-button jfk-button-action ">
+</td>
+</tr></tbody></table></div></ol></form></div>
+    </div><!-- content -->
+  </section><!-- dialog -->
+  
+  <!-- End add event page... -->
+  
+  <!-- The little thank you dialog that shows after the event has been, added, presumingly it has been -->
+  <section id="thankYou" data-overlay-theme="a" data-role="dialog">
+    <header data-role="header"><h1>Thank you!</h1></header>
+    <div data-theme="a" data-role="content">
+      <p>Thank you! Your event has been sent out to be added to the calendar.</p>
+    </div><!-- content -->
+  </section><!-- dialog -->
+  
+  <!-- End thank you dialog -->
+  
+<!-- The main script that does some of the utility work in the application (This is not the google script!) -->
+<script src="js/script.js"></script>
+</body>
+</html>
